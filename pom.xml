@@ -21,7 +21,8 @@
         <module>order</module>
         <module>warehouse</module>
         <module>renren-fast</module>
-
+        <module>renren-generator</module>
+        <module>common</module>
     </modules>
 
 </project>
