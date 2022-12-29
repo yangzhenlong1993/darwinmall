@@ -3,6 +3,7 @@ package com.zhenlong.darwinmall.member.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.zhenlong.darwinmall.member.feign.CouponFeignService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,7 +30,17 @@ import com.zhenlong.common.utils.R;
 public class MemberController {
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private CouponFeignService couponFeignService;
 
+    @RequestMapping("/coupons")
+    public R test(){
+        MemberEntity member = new MemberEntity();
+        member.setNickname("张三");
+        R memberCoupons = couponFeignService.memberCoupons();
+
+        return R.ok().put("member", member).put("coupon", memberCoupons.get("coupons"));
+    }
     /**
      * 列表
      */
