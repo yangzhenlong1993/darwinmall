@@ -1,3 +1,4 @@
+
 spring:
   cloud:
     gateway:
@@ -10,3 +11,18 @@ spring:
           uri: https://www.qq.com
           predicates:
             - Query=url, qq
+        - id: admin_route
+          uri: lb://renren-fast
+          predicates:
+            - Path=/api/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
+    nacos:
+      discovery:
+        server-addr: 192.168.56.10:8848
+        namespace: 3b488115-7342-4e8b-98d9-98853599bf91
+  application:
+    name: gateway
+##前端项目发送的请求，前缀都为api
+server:
+  port: 80
