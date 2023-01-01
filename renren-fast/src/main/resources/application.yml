@@ -45,7 +45,6 @@ spring:
     nacos:
       discovery:
         server-addr: 192.168.56.10:8848
-        namespace: 3b488115-7342-4e8b-98d9-98853599bf91
 #  resources:
 #    add-mappings: false
 

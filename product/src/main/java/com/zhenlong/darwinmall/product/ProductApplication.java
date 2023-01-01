@@ -12,6 +12,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  *      a. configure data source: mysql driver; configure data source info in yml file
  *      b. configure mybatis-plus: @MapperScan; sql Mapping location
  *
+ * 2.逻辑删除
+ *  1) 在application.yml中配置全局逻辑删除规则
  */
 
 @EnableDiscoveryClient

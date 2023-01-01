@@ -25,6 +25,20 @@
             <groupId>com.zhenlong.darwinmall</groupId>
             <artifactId>common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.alibaba.cloud</groupId>
+                    <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.httpcomponents</groupId>
+                    <artifactId>httpclient</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.httpcomponents</groupId>
+                    <artifactId>httpcore</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -43,10 +57,10 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-amqp</artifactId>-->
+<!--        </dependency>-->
 
         <!-- 模板引擎 -->
         <dependency>
@@ -55,17 +69,17 @@
         </dependency>
 
 
-        <!-- 引入redis -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
+<!--        &lt;!&ndash; 引入redis &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-data-redis</artifactId>-->
+<!--        </dependency>-->
 
         <!-- 整合springsession -->
-        <dependency>
-            <groupId>org.springframework.session</groupId>
-            <artifactId>spring-session-data-redis</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.session</groupId>-->
+<!--            <artifactId>spring-session-data-redis</artifactId>-->
+<!--        </dependency>-->
 
         <!-- 引入aop -->
         <dependency>
@@ -79,16 +93,16 @@
             <optional>true</optional>
         </dependency>
 
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>io.seata</groupId>
-                    <artifactId>seata-all</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.alibaba.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-starter-alibaba-seata</artifactId>-->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>io.seata</groupId>-->
+<!--                    <artifactId>seata-all</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>io.seata</groupId>
@@ -98,17 +112,17 @@
 
         <!-- 支付宝sdk -->
         <!-- https://mvnrepository.com/artifact/com.alipay.sdk/alipay-sdk-java -->
-        <dependency>
-            <groupId>com.alipay.sdk</groupId>
-            <artifactId>alipay-sdk-java</artifactId>
-            <version>4.9.28.ALL</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.alipay.sdk</groupId>-->
+<!--            <artifactId>alipay-sdk-java</artifactId>-->
+<!--            <version>4.9.28.ALL</version>-->
+<!--        </dependency>-->
 
-        <dependency>
-            <groupId>cn.springboot</groupId>
-            <artifactId>best-pay-sdk</artifactId>
-            <version>1.3.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>cn.springboot</groupId>-->
+<!--            <artifactId>best-pay-sdk</artifactId>-->
+<!--            <version>1.3.0</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
