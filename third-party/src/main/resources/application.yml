@@ -1,0 +1,15 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.56.10:8848
+    alicloud:
+      access-key: LTAI5tEgtLEi9vmw3J3mkbfr
+      secret-key: 6OdSxceQx9xhxX2PAB8L23oyf9INHi
+      oss:
+        endpoint: oss-ap-southeast-2.aliyuncs.com
+        bucket: darwin-mall
+  application:
+    name: third-party
+server:
+  port: 30000

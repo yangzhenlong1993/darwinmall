@@ -8,6 +8,7 @@ spring:
     nacos:
       discovery:
         server-addr: 192.168.56.10:8848
+
   application:
     name: product
 mybatis-plus:
