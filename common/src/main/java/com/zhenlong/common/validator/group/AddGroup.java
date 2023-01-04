@@ -11,7 +11,7 @@ package com.zhenlong.common.validator.group;
 /**
  * 新增数据 Group
  *
- * @author Mark sunlightcs@gmail.com
+ * @author yangzhenlong1993@gmail.com
  */
 public interface AddGroup {
 }
