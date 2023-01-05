@@ -4,6 +4,8 @@ package com.zhenlong.darwinmall.product;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zhenlong.darwinmall.product.entity.BrandEntity;
 import com.zhenlong.darwinmall.product.service.BrandService;
+import com.zhenlong.darwinmall.product.service.CategoryService;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,16 +15,26 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.List;
 
+@Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ProductApplicationTests {
     @Autowired
     BrandService brandService;
+    @Autowired
+    CategoryService categoryService;
 //
 //    @Autowired(required = false)
 //    OSSClient ossClient;
+
+    @Test
+    public void testFindPath(){
+        Long[] catelogPath = categoryService.findCatelogPath(186L);
+        log.info("完整路径: {}", Arrays.asList(catelogPath));
+    }
 
     @Test
     public void contextLoads() {
