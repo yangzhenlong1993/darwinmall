@@ -3,6 +3,8 @@ package com.zhenlong.darwinmall.product.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhenlong.common.utils.PageUtils;
 import com.zhenlong.darwinmall.product.entity.AttrEntity;
+import com.zhenlong.darwinmall.product.vo.AttrRespVo;
+import com.zhenlong.darwinmall.product.vo.AttrVo;
 
 import java.util.Map;
 
@@ -16,5 +18,13 @@ import java.util.Map;
 public interface AttrService extends IService<AttrEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    void saveAttr(AttrVo attr);
+
+    PageUtils queryBaseAttrPage(Map<String, Object> params, Long catelogId, String attrType);
+
+    AttrRespVo getAttrInfo(Long attrId);
+
+    void updateAttr(AttrVo attr);
 }
 
