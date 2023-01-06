@@ -17,3 +17,6 @@ mybatis-plus:
       id-type: auto
 server:
   port: 8000
+logging:
+  level:
+    com.zhenlong.darwinmall: debug

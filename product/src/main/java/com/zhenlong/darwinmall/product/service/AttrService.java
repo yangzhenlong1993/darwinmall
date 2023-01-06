@@ -3,9 +3,11 @@ package com.zhenlong.darwinmall.product.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhenlong.common.utils.PageUtils;
 import com.zhenlong.darwinmall.product.entity.AttrEntity;
+import com.zhenlong.darwinmall.product.vo.AttrGroupRelationVo;
 import com.zhenlong.darwinmall.product.vo.AttrRespVo;
 import com.zhenlong.darwinmall.product.vo.AttrVo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,5 +28,11 @@ public interface AttrService extends IService<AttrEntity> {
     AttrRespVo getAttrInfo(Long attrId);
 
     void updateAttr(AttrVo attr);
+
+    List<AttrEntity> getRelationAttr(Long attrgroupId);
+
+    void deleteRelation(AttrGroupRelationVo[] vos);
+
+    PageUtils getNoRelationAttr(Map<String, Object> params, Long attrgroupId);
 }
 
