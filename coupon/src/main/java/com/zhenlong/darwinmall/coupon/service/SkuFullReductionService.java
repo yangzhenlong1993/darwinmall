@@ -1,6 +1,7 @@
 package com.zhenlong.darwinmall.coupon.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zhenlong.common.to.SkuReductionTo;
 import com.zhenlong.common.utils.PageUtils;
 import com.zhenlong.darwinmall.coupon.entity.SkuFullReductionEntity;
 
@@ -16,5 +17,7 @@ import java.util.Map;
 public interface SkuFullReductionService extends IService<SkuFullReductionEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    void saveSkuReduction(SkuReductionTo skuReductionTo);
 }
 
