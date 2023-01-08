@@ -25,7 +25,7 @@ import com.zhenlong.common.utils.R;
  * @date 2022-12-27 21:07:54
  */
 @RestController
-@RequestMapping("warehouse/purchasedetail")
+@RequestMapping("ware/purchasedetail")
 public class PurchaseDetailController {
     @Autowired
     private PurchaseDetailService purchaseDetailService;

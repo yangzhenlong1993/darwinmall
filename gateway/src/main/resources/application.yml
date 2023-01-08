@@ -4,7 +4,14 @@ spring:
     gateway:
       routes:
 ##过滤器的顺序很重要，应该将高精度的路由地址放在前面
-##商品服务的路由
+        ##仓库管理系统的路由
+        - id: warehouse_route
+          uri: lb://warehouse
+          predicates:
+            - Path=/api/ware/**
+          filters:
+            - RewritePath=/api/(?<segment>.*), /$\{segment}
+          ##商品服务的路由
         - id: product_route
           uri: lb://product
           predicates:

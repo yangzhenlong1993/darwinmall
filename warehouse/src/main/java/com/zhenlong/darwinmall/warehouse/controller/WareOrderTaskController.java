@@ -25,7 +25,7 @@ import com.zhenlong.common.utils.R;
  * @date 2022-12-27 21:07:54
  */
 @RestController
-@RequestMapping("warehouse/wareordertask")
+@RequestMapping("ware/wareordertask")
 public class WareOrderTaskController {
     @Autowired
     private WareOrderTaskService wareOrderTaskService;
