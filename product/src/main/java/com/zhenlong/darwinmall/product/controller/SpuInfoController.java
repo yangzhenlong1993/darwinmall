@@ -5,11 +5,7 @@ import java.util.Map;
 
 import com.zhenlong.darwinmall.product.vo.SpuSaveVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.zhenlong.darwinmall.product.entity.SpuInfoEntity;
 import com.zhenlong.darwinmall.product.service.SpuInfoService;
@@ -32,10 +28,19 @@ public class SpuInfoController {
     private SpuInfoService spuInfoService;
 
     /**
+     * Spu上架功能
+     */
+    @PostMapping("/{spuId}/up")
+    public R SpuPutOnSale(@PathVariable(value = "spuId") Long spuId){
+        spuInfoService.putOnSale(spuId);
+
+        return R.ok();
+    }
+
+    /**
      * 列表
      */
     @RequestMapping("/list")
-    //@RequiresPermissions("product:spuinfo:list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = spuInfoService.queryPageByCondition(params);
 
