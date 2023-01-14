@@ -1,6 +1,7 @@
 package com.zhenlong.darwinmall.product.service.impl;
 
 import com.zhenlong.darwinmall.product.service.CategoryBrandRelationService;
+import com.zhenlong.darwinmall.product.vo.Catelog2Vo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -85,6 +86,50 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         this.updateById(category);
         categoryBrandRelationService.updateCategory(category.getCatId(), category.getName());
     }
+
+    @Override
+    public List<CategoryEntity> getLevelOneCategory() {
+        List<CategoryEntity> categoryEntities = baseMapper.selectList(new QueryWrapper<CategoryEntity>().eq("parent_cid", 0));
+        return categoryEntities;
+    }
+
+    @Override
+    public Map<String, List<Catelog2Vo>> getCatalogJson() {
+        /**
+         * 将数据库的多次查询变为一次，避免频繁与数据库交互，避免循环内查库
+         */
+        List<CategoryEntity> selectList = baseMapper.selectList(null);
+
+        List<CategoryEntity> levelOneCategory = getParentCid(selectList, 0L);
+        Map<String, List<Catelog2Vo>> parentCid = levelOneCategory.stream().collect(Collectors.toMap(k -> k.getCatId().toString(), v -> {
+            //查到一级分类内的所有二级分类
+            List<CategoryEntity> categoryEntities = getParentCid(selectList,v.getCatId());
+            List<Catelog2Vo> catelog2Vos = null;
+            if (categoryEntities != null) {
+                catelog2Vos = categoryEntities.stream().map(l2item -> {
+                    Catelog2Vo catelog2Vo = new Catelog2Vo(v.getCatId().toString(), null, l2item.getCatId().toString(), l2item.getName());
+                    List<CategoryEntity> level3Catalog = getParentCid(selectList, l2item.getCatId());
+                    if(level3Catalog != null){
+                        List<Catelog2Vo.Catelog3Vo> catelog3Vos = level3Catalog.stream().map(l3item -> {
+                            Catelog2Vo.Catelog3Vo catelog3Vo = new Catelog2Vo.Catelog3Vo(l2item.getCatId().toString(),l3item.getCatId().toString(),l3item.getName());
+                            return catelog3Vo;
+                        }).collect(Collectors.toList());
+                        catelog2Vo.setCatalog3List(catelog3Vos);
+                    }
+                    return catelog2Vo;
+                }).collect(Collectors.toList());
+            }
+            return catelog2Vos;
+        }));
+        return parentCid;
+    }
+
+    private List<CategoryEntity> getParentCid(List<CategoryEntity> selectList, Long parentCid) {
+        //return baseMapper.selectList(new QueryWrapper<CategoryEntity>().eq("parent_cid", v.getCatId()));
+        List<CategoryEntity> collect = selectList.stream().filter(item -> item.getParentCid() == parentCid).collect(Collectors.toList());
+        return collect;
+    }
+
 
     //比如225，25，2
     private List<Long> findParentPath(Long catelogId, List<Long> paths) {

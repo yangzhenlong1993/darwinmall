@@ -32,12 +32,18 @@ spring:
             - Path=/api/thirdparty/**
           filters:
             - RewritePath=/api/thirdparty/(?<segment>.*), /$\{segment}
+        ##后台管理的路由
         - id: admin_route
           uri: lb://renren-fast
           predicates:
             - Path=/api/**
           filters:
             - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
+        ##nginx上游配置，不能放在前面，会被网关直接匹配并转发，不会执行后面的路由配置
+        - id: darwinmall_host_route
+          uri: lb://product
+          predicates:
+            - Host=**.darwinmall.com
 
     nacos:
       discovery:
