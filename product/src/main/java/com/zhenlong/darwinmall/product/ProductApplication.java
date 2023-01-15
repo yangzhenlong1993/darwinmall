@@ -3,6 +3,7 @@ package com.zhenlong.darwinmall.product;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
@@ -34,7 +35,23 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @ControllerAdvice
  *  1) 编写异常处理类，使用@RestControllerAdvice
  *  2） 使用@ExceptionHandler标注方法可以处理的异常
+ *
+ * 5. Redis整合
+ * 1）引入data-redis-starter
+ * 2）简单配置redis的host信息
+ * 3）使用springboot自动配置好的StringRedisTemplate来操作redis
+ *
+ * 6. 整合springcache简化缓存开发
+ *  1. 引入依赖，spring boot starter cache 和 spring boot starter data redis
+ *  2，写配置
+ *      1. 自动配置 CacheAutoConfiguration会导入redisCacheConfiguration
+ *      自动配好了RedisCacheManager
+ *      2.配置使用redis作为缓存
+ *      spring.cache.type=redis
+ *      3. 测试使用缓存
+ *          1. 开启缓存 @EnableCaching
  */
+
 @EnableFeignClients(basePackages = "com.zhenlong.darwinmall.product.feign")
 @EnableDiscoveryClient
 @MapperScan("com.zhenlong.darwinmall.product.dao")

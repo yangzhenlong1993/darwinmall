@@ -10,6 +10,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.FileInputStream;
@@ -17,6 +19,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @RunWith(SpringRunner.class)
@@ -26,6 +29,8 @@ public class ProductApplicationTests {
     BrandService brandService;
     @Autowired
     CategoryService categoryService;
+    @Autowired
+    StringRedisTemplate stringRedisTemplate;
 //
 //    @Autowired(required = false)
 //    OSSClient ossClient;
@@ -94,5 +99,14 @@ public class ProductApplicationTests {
 //            }
 //        }
 //    }
+
+    @Test
+    public void testStringRedisTemplate(){
+        //k:hello v:word
+        ValueOperations<String, String> opsForValue = stringRedisTemplate.opsForValue();
+        opsForValue.set("hello","world"+ UUID.randomUUID().toString());
+        String hello = opsForValue.get("hello");
+        System.out.println("之前保存的数据是"+hello);
+    }
 
 }
