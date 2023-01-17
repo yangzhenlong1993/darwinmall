@@ -35,8 +35,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -89,6 +92,7 @@ public class MallSearchServiceImpl implements MallSearchService {
         searchResult.setProducts(esModels);
         //2.当前所有商品涉及到的所有属性信息
         List<SearchResult.AttrVo> attrVos = new ArrayList<>();
+
         ParsedNested attrAgg = response.getAggregations().get("attr_agg");
         ParsedLongTerms attrIdAgg = attrAgg.getAggregations().get("attr_id_agg");
         for (Terms.Bucket bucket : attrIdAgg.getBuckets()) {
@@ -146,6 +150,38 @@ public class MallSearchServiceImpl implements MallSearchService {
             pageNavs.add(i);
         }
         searchResult.setPageNavs(pageNavs);
+
+        if (param.getAttrs() != null && param.getAttrs().size() > 0) {
+            //构建面包屑导航
+            List<SearchResult.NavVo> navVos = param.getAttrs().stream().map(attr -> {
+                SearchResult.NavVo navVo = new SearchResult.NavVo();
+                navVo.setNavValue(attr);
+                if (attrVos.size() > 0 && attrVos != null) {
+                    String[] s = attr.split("_");
+                    for (SearchResult.AttrVo attrVo : attrVos) {
+                        if (attrVo.getAttrId()==Integer.parseInt(s[0])) {
+                            navVo.setNavName(attrVo.getAttrName());
+                            break;
+                        }
+                    }
+                }
+                String encode;
+                try {
+                    encode = URLEncoder.encode(attr, "UTF-8");
+                    encode = encode.replace("+", "%20");
+                } catch (UnsupportedEncodingException e) {
+                    throw new RuntimeException(e);
+                }
+                String replace = param.getQueryString().replace("&attrs=" + encode, "");
+                navVo.setLink("http://search.darwinmall.com/list.html?" + replace);
+
+                return navVo;
+            }).collect(Collectors.toList());
+
+            searchResult.setNavs(navVos);
+        }
+
+
         return searchResult;
     }
 

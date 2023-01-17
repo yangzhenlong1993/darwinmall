@@ -22,6 +22,15 @@ public class SearchResult {
     private List<AttrVo> attrs;//当前结果查询到的结果，所有涉及到的所有属性
 
     //================以上是返回给页面的信息=======================
+    //面包屑导航
+    private List<NavVo> navs;
+
+    @Data
+    public static class NavVo{
+        private String navName;
+        private String navValue;
+        private String link;
+    }
     @Data
     public static class BrandVo{
         private Long brandId;
