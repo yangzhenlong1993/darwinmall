@@ -43,7 +43,7 @@ spring:
         - id: darwinmall_host_route
           uri: lb://product
           predicates:
-            - Host=darwinmall.com
+            - Host=darwinmall.com,item.darwinmall.com
         - id: darwinmall_search_route
           uri: lb://search
           predicates:

@@ -2,9 +2,12 @@ package com.zhenlong.darwinmall.product;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.zhenlong.darwinmall.product.dao.AttrGroupDao;
+import com.zhenlong.darwinmall.product.dao.SkuSaleAttrValueDao;
 import com.zhenlong.darwinmall.product.entity.BrandEntity;
 import com.zhenlong.darwinmall.product.service.BrandService;
 import com.zhenlong.darwinmall.product.service.CategoryService;
+import com.zhenlong.darwinmall.product.vo.SkuItemVo;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,9 +34,21 @@ public class ProductApplicationTests {
     CategoryService categoryService;
     @Autowired
     StringRedisTemplate stringRedisTemplate;
+    @Autowired
+    AttrGroupDao attrGroupDao;
+    @Autowired
+    SkuSaleAttrValueDao skuSaleAttrValueDao;
 //
 //    @Autowired(required = false)
 //    OSSClient ossClient;
+
+    @Test
+    public void testGetSpuAttrGroupInfo(){
+/*        List<SkuItemVo.SpuItemAttrGroupAttrVo> attrGroupWithAttrsBySpuId = attrGroupDao.getAttrGroupWithAttrsBySpuId(100l, 225l);
+        System.out.println(attrGroupWithAttrsBySpuId.toString());*/
+        List<SkuItemVo.SkuItemSaleAttrVo> saleAttrsBySpuId = skuSaleAttrValueDao.getSaleAttrsBySpuId(5l);
+        System.out.println(saleAttrsBySpuId.toString());
+    }
 
     @Test
     public void testFindPath(){
