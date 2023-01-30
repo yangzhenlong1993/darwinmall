@@ -205,6 +205,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 
     /**
      * 商品上架
+     *
      * @param spuId
      */
     @Override
@@ -224,18 +225,18 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
             return singleAttrs;
         }).collect(Collectors.toList());
         //查出当前spuid对应的所有sku信息，品牌的名字
-        List<SkuInfoEntity> skuInfoEntities=skuInfoService.getSkusBySpuId(spuId);
+        List<SkuInfoEntity> skuInfoEntities = skuInfoService.getSkusBySpuId(spuId);
         List<Long> skuIdList = skuInfoEntities.stream().map(SkuInfoEntity::getSkuId).collect(Collectors.toList());
         //发送远程调用给ware service查询是否有库存
         Map<Long, Boolean> hasStockMap = null;
         try {
             R hasStockR = wareFeignService.getSkusHasStock(skuIdList);
-            TypeReference<List<SkuHasStockVo>> typeReference = new TypeReference<List<SkuHasStockVo>>(){
+            TypeReference<List<SkuHasStockVo>> typeReference = new TypeReference<List<SkuHasStockVo>>() {
                 //方法受保护，所以必须要匿名内部类
             };
             hasStockMap = hasStockR.getData(typeReference).stream().collect(Collectors.toMap(SkuHasStockVo::getSkuId, item -> item.getHasStock()));
-        } catch (Exception e){
-            log.error("库存服务查询异常: 原因{}",e);
+        } catch (Exception e) {
+            log.error("库存服务查询异常: 原因{}", e);
         }
 
         //封装每个sku的信息
@@ -270,7 +271,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 
         //将数据发送给es进行保存
         R r = searchFeignService.productStatusOnSale(onSaleProducts);
-        if(r.getCode()==0){
+        if (r.getCode() == 0) {
             //远程调用成功，修改当前商品的上架状态
             this.baseMapper.updateSpuStatus(spuId, ProductConstant.StatusEnum.SPU_ON_SALE.getCode());
         } else {

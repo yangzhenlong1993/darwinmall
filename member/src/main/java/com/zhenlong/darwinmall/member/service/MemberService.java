@@ -3,6 +3,10 @@ package com.zhenlong.darwinmall.member.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhenlong.common.utils.PageUtils;
 import com.zhenlong.darwinmall.member.entity.MemberEntity;
+import com.zhenlong.darwinmall.member.exception.PhoneExistException;
+import com.zhenlong.darwinmall.member.exception.UsernameExistException;
+import com.zhenlong.darwinmall.member.vo.MemberLoginVo;
+import com.zhenlong.darwinmall.member.vo.MemberRegisterVo;
 
 import java.util.Map;
 
@@ -16,5 +20,13 @@ import java.util.Map;
 public interface MemberService extends IService<MemberEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    void register(MemberRegisterVo vo);
+
+    void checkPhoneUnique(String phone) throws PhoneExistException;
+
+    void checkUsernameUnique(String username) throws UsernameExistException;
+
+    MemberEntity login(MemberLoginVo vo);
 }
 

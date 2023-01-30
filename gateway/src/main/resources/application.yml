@@ -48,6 +48,10 @@ spring:
           uri: lb://search
           predicates:
             - Host=search.darwinmall.com
+        - id: darwinmall_auth_route
+          uri: lb://auth-server
+          predicates:
+            - Host=auth.darwinmall.com
 
     nacos:
       discovery:
