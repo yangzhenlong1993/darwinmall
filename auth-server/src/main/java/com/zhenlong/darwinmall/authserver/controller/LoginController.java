@@ -7,15 +7,11 @@ import com.zhenlong.darwinmall.authserver.vo.UserLoginVo;
 import com.zhenlong.darwinmall.authserver.vo.UserRegisterVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.naming.Binding;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
@@ -66,7 +62,7 @@ public class LoginController {
     public String login(UserLoginVo vo, RedirectAttributes redirectAttributes){
         R r = memberFeignService.login(vo);
         if (r.getCode()==0){
-            //成功
+            //TODO 成功之后的处理
             return "redirect:http://darwinmall.com";
         } else {
             Map<String,String> errors= new HashMap<>();

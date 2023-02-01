@@ -1,28 +1,25 @@
-package com.zhenlong.darwinmall.member.entity;
+package com.zhenlong.common.vo;
 
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 会员
- * 
+ *
  * @author zhenlong
  * @email yangzhenlong1993@gmail.com
  * @date 2022-12-27 20:38:12
  */
 @Data
-@TableName("ums_member")
-public class MemberEntity implements Serializable {
-	private static final long serialVersionUID = 1L;
-
+@ToString
+public class MemberRespVo implements Serializable {
 	/**
 	 * id
 	 */
-	@TableId
+
 	private Long id;
 	/**
 	 * 会员等级id
@@ -82,18 +79,18 @@ public class MemberEntity implements Serializable {
 	private Integer integration;
 	/**
 	 * 成长值
-     */
-    private Integer growth;
-    /**
-     * 启用状态
-     */
-    private Integer status;
-    /**
-     * 注册时间
-     */
-    private Date createTime;
-    private String socialUid;
-    private String accessToken;
-    private Long expiresIn;
+	 */
+	private Integer growth;
+	/**
+	 * 启用状态
+	 */
+	private Integer status;
+	/**
+	 * 注册时间
+	 */
+	private Date createTime;
+	private String socialUid;
+	private String accessToken;
+	private Long expiresIn;
 
 }

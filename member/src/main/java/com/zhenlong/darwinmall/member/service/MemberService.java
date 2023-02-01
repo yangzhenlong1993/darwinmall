@@ -7,6 +7,7 @@ import com.zhenlong.darwinmall.member.exception.PhoneExistException;
 import com.zhenlong.darwinmall.member.exception.UsernameExistException;
 import com.zhenlong.darwinmall.member.vo.MemberLoginVo;
 import com.zhenlong.darwinmall.member.vo.MemberRegisterVo;
+import com.zhenlong.darwinmall.member.vo.SocialUser;
 
 import java.util.Map;
 
@@ -28,5 +29,7 @@ public interface MemberService extends IService<MemberEntity> {
     void checkUsernameUnique(String username) throws UsernameExistException;
 
     MemberEntity login(MemberLoginVo vo);
+
+    MemberEntity login(SocialUser socialUser) throws Exception;
 }
 

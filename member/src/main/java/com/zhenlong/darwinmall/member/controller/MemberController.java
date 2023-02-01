@@ -1,21 +1,21 @@
 package com.zhenlong.darwinmall.member.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
 import com.zhenlong.common.exception.BizCodeEnum;
+import com.zhenlong.common.utils.PageUtils;
+import com.zhenlong.common.utils.R;
+import com.zhenlong.darwinmall.member.entity.MemberEntity;
 import com.zhenlong.darwinmall.member.exception.PhoneExistException;
 import com.zhenlong.darwinmall.member.exception.UsernameExistException;
 import com.zhenlong.darwinmall.member.feign.CouponFeignService;
+import com.zhenlong.darwinmall.member.service.MemberService;
 import com.zhenlong.darwinmall.member.vo.MemberLoginVo;
 import com.zhenlong.darwinmall.member.vo.MemberRegisterVo;
+import com.zhenlong.darwinmall.member.vo.SocialUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.zhenlong.darwinmall.member.entity.MemberEntity;
-import com.zhenlong.darwinmall.member.service.MemberService;
-import com.zhenlong.common.utils.PageUtils;
-import com.zhenlong.common.utils.R;
+import java.util.Arrays;
+import java.util.Map;
 
 
 /**
@@ -32,6 +32,16 @@ public class MemberController {
     private MemberService memberService;
     @Autowired
     private CouponFeignService couponFeignService;
+
+    @PostMapping("/oauth2/login")
+    public R oAuthLogin(@RequestBody SocialUser SocialUser) throws Exception {
+        MemberEntity entity = memberService.login(SocialUser);
+        if (entity != null) {
+            return R.ok().setData(entity);
+        } else {
+            return R.error(BizCodeEnum.LOGIN_FAILED_EXCEPTION.getCode(), BizCodeEnum.LOGIN_FAILED_EXCEPTION.getMsg());
+        }
+    }
 
     @RequestMapping("/coupons")
     public R test() {
@@ -74,7 +84,6 @@ public class MemberController {
        }else {
            return R.error(BizCodeEnum.LOGIN_FAILED_EXCEPTION.getCode(),BizCodeEnum.LOGIN_FAILED_EXCEPTION.getMsg());
        }
-
     }
 
 
