@@ -40,18 +40,22 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
         ##nginx上游配置，不能放在前面，会被网关直接匹配并转发，不会执行后面的路由配置
-        - id: darwinmall_host_route
+        - id: host_route
           uri: lb://product
           predicates:
             - Host=darwinmall.com,item.darwinmall.com
-        - id: darwinmall_search_route
+        - id: search_route
           uri: lb://search
           predicates:
             - Host=search.darwinmall.com
-        - id: darwinmall_auth_route
+        - id: auth_route
           uri: lb://auth-server
           predicates:
             - Host=auth.darwinmall.com
+        - id: cart_route
+          uri: lb://cart
+          predicates:
+            - Host=cart.darwinmall.com
 
     nacos:
       discovery:

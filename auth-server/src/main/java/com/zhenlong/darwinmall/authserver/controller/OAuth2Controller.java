@@ -32,13 +32,13 @@ public class OAuth2Controller {
     public String weibo(@RequestParam("code") String code, HttpSession session) throws Exception {
         Map<String, String> map = new HashMap<>();
         //TODO 社交登录授权信息
-        map.put("client_id", "");
-        map.put("client_secret", "");
+        map.put("client_id", "2347423033");
+        map.put("client_secret", "affa9f40b2273a50dc65338ff9f779ab");
         map.put("grant_type", "authorization_code");
-        map.put("redirect_uri", "http://gulimall.com/oauth2.0/weibo/success");
+        map.put("redirect_uri", "http://auth.darwinmall.com/oauth2.0/weibo/success");
         map.put("code", code);
         //1.根据code换取accessToken
-        HttpResponse response = HttpUtils.doPost("api.weibo.com", "/oauth2/access_token", "post", null, null, map);
+        HttpResponse response = HttpUtils.doPost("https://api.weibo.com", "/oauth2/access_token", "post", new HashMap<>(), map, new HashMap<>());
         //2.处理返回信息
         if (response.getStatusLine().getStatusCode() == 200) {
             //获取到了accessToken

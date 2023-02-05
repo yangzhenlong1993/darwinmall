@@ -645,6 +645,11 @@
 
                         </div>
                     </div>
+                    <div class="box-btns-two">
+                        <a href="#" id="addToCart" th:attr="skuId=${item.info.skuId}">
+                            add to cart
+                        </a>
+                    </div>
 
                     <div class="box-btns-three">
                         <img src="/static/item/img/e4ed3606843f664591ff1f68f7fda12d.png" alt=""/> 分享
@@ -1285,10 +1290,10 @@
     };
 
 
-    $(".addToCart").click(function () {
+    $("#addToCart").click(function () {
         let skuId = $(this).attr("skuId");
         let num = $("#productNum").val();
-        location.href = "http://cart.darwinmall.com/addCartItem?skuId=" + skuId + "&num=" + num;
+        location.href = "http://cart.darwinmall.com/addToCart?skuId=" + skuId + "&num=" + num;
         return false;
     });
 
