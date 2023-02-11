@@ -56,6 +56,10 @@ spring:
           uri: lb://cart
           predicates:
             - Host=cart.darwinmall.com
+        - id: order_route
+          uri: lb://order
+          predicates:
+            - Host=order.darwinmall.com
 
     nacos:
       discovery:

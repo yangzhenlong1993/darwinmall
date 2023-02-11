@@ -1,16 +1,15 @@
-package com.zhenlong.darwinmall.product.controller;
+package com.zhenlong.darwinmall.product.app;
 
-import java.util.Arrays;
-import java.util.Map;
-
+import com.zhenlong.common.utils.PageUtils;
+import com.zhenlong.common.utils.R;
+import com.zhenlong.darwinmall.product.entity.SpuInfoEntity;
+import com.zhenlong.darwinmall.product.service.SpuInfoService;
 import com.zhenlong.darwinmall.product.vo.SpuSaveVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.zhenlong.darwinmall.product.entity.SpuInfoEntity;
-import com.zhenlong.darwinmall.product.service.SpuInfoService;
-import com.zhenlong.common.utils.PageUtils;
-import com.zhenlong.common.utils.R;
+import java.util.Arrays;
+import java.util.Map;
 
 
 

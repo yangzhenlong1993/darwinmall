@@ -1,20 +1,19 @@
-package com.zhenlong.darwinmall.product.controller;
+package com.zhenlong.darwinmall.product.app;
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.zhenlong.common.utils.PageUtils;
+import com.zhenlong.common.utils.R;
+import com.zhenlong.darwinmall.product.entity.BrandEntity;
+import com.zhenlong.darwinmall.product.entity.CategoryBrandRelationEntity;
+import com.zhenlong.darwinmall.product.service.CategoryBrandRelationService;
+import com.zhenlong.darwinmall.product.vo.BrandVo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.zhenlong.darwinmall.product.entity.BrandEntity;
-import com.zhenlong.darwinmall.product.vo.BrandVo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import com.zhenlong.darwinmall.product.entity.CategoryBrandRelationEntity;
-import com.zhenlong.darwinmall.product.service.CategoryBrandRelationService;
-import com.zhenlong.common.utils.PageUtils;
-import com.zhenlong.common.utils.R;
 
 
 /**

@@ -1,4 +1,4 @@
-package com.zhenlong.darwinmall.product.config;
+package com.zhenlong.darwinmall.order.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

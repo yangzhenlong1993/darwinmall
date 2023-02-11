@@ -10,6 +10,28 @@ spring:
         server-addr: 192.168.56.10:8848
   application:
     name: order
+  rabbitmq:
+    host: 192.168.56.10
+    port: 5672
+    virtual-host: /
+    ##开启发送端确认
+    publisher-confirms: true
+    ##开启发送端消息抵达队列的确认
+    publisher-returns: true
+    ##只要抵达队列，以异步方式优先回调这个returnConfirm
+    template:
+      mandatory: true
+    ##消费者手动确认授信ack
+    listener:
+      simple:
+        acknowledge-mode: manual
+  thymeleaf:
+    cache: false
+  session:
+    store-type: redis
+  redis:
+    host: 192.168.56.10
+    port: 6379
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
   global-config:

@@ -1,4 +1,4 @@
-package com.zhenlong.darwinmall.product.controller;
+package com.zhenlong.darwinmall.product.app;
 
 import com.zhenlong.common.utils.PageUtils;
 import com.zhenlong.common.utils.R;

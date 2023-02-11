@@ -1,4 +1,4 @@
-package com.zhenlong.darwinmall.product.controller;
+package com.zhenlong.darwinmall.product.app;
 
 import com.zhenlong.common.utils.PageUtils;
 import com.zhenlong.common.utils.R;
@@ -7,6 +7,7 @@ import com.zhenlong.darwinmall.product.service.SkuInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -25,11 +26,16 @@ public class SkuInfoController {
     @Autowired
     private SkuInfoService skuInfoService;
 
+    @GetMapping("/{skuId}/price")
+    public BigDecimal getLatestPrice(@PathVariable("skuId") Long skuId) {
+        return skuInfoService.getById(skuId).getPrice();
+    }
+
     /**
      * 列表
      */
     @RequestMapping("/list")
-    public R list(@RequestParam Map<String, Object> params){
+    public R list(@RequestParam Map<String, Object> params) {
         PageUtils page = skuInfoService.queryPageByCondition(params);
 
         return R.ok().put("page", page);

@@ -102,12 +102,13 @@
                                     <p>
                                         <span th:text="${item.title}">TCL 55A950C 55英寸32核</span>
                                         <br/>
-                                        <span th:each="attr:${item.skuAttrValues}" th:text="${attr}">尺码: 55时 超薄曲面 人工智能</span>
+                                        <span th:each="attr:${item.skuAttr}"
+                                              th:text="${attr}">尺码: 55时 超薄曲面 人工智能</span>
                                     </p>
                                 </dd>
                             </li>
                             <li>
-                                <p class="dj" th:text="'￥' + ${#numbers.formatDecimal(item.price,3,2)}">￥4599.00</p>
+                                <p class="dj" th:text="'$' + ${#numbers.formatDecimal(item.price,3,2)}">￥4599.00</p>
 
                             </li>
                             <li>
@@ -119,7 +120,7 @@
 
                             </li>
                             <li style="font-weight:bold"><p class="zj">
-                                ￥[[${#numbers.formatDecimal(item.totalPrice,3,2)}]]</p></li>
+                                $[[${#numbers.formatDecimal(item.totalPrice,3,2)}]]</p></li>
                             <li>
                                 <p class="deleteItemBtn" th:attr="skuId=${item.skuId}">删除</p>
                             </li>
@@ -149,7 +150,7 @@
             <div>
                 <ol>
                     <li>总价:<span style="color:#e64346;font-weight:bold;font-size:16px;" class="fnt">￥[[${#numbers.formatDecimal(cart.totalAmount, 3, 2)}]]</span>
-                    <li>优惠：￥[[${#numbers.formatDecimal(cart.reduce,1,2)}]]</li>
+                    <li>优惠：$[[${#numbers.formatDecimal(cart.reduce,1,2)}]]</li>
                 </ol>
             </div>
             <div>

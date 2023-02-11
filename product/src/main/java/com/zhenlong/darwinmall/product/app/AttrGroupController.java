@@ -1,11 +1,11 @@
-package com.zhenlong.darwinmall.product.controller;
+package com.zhenlong.darwinmall.product.app;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
+import com.zhenlong.common.utils.PageUtils;
+import com.zhenlong.common.utils.R;
 import com.zhenlong.darwinmall.product.entity.AttrEntity;
+import com.zhenlong.darwinmall.product.entity.AttrGroupEntity;
 import com.zhenlong.darwinmall.product.service.AttrAttrgroupRelationService;
+import com.zhenlong.darwinmall.product.service.AttrGroupService;
 import com.zhenlong.darwinmall.product.service.AttrService;
 import com.zhenlong.darwinmall.product.service.CategoryService;
 import com.zhenlong.darwinmall.product.vo.AttrGroupRelationVo;
@@ -13,10 +13,9 @@ import com.zhenlong.darwinmall.product.vo.AttrGroupWithAttrsVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.zhenlong.darwinmall.product.entity.AttrGroupEntity;
-import com.zhenlong.darwinmall.product.service.AttrGroupService;
-import com.zhenlong.common.utils.PageUtils;
-import com.zhenlong.common.utils.R;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 
 /**

@@ -1,20 +1,18 @@
-package com.zhenlong.darwinmall.product.controller;
+package com.zhenlong.darwinmall.product.app;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
+import com.zhenlong.common.utils.PageUtils;
+import com.zhenlong.common.utils.R;
 import com.zhenlong.darwinmall.product.entity.ProductAttrValueEntity;
+import com.zhenlong.darwinmall.product.service.AttrService;
 import com.zhenlong.darwinmall.product.service.ProductAttrValueService;
 import com.zhenlong.darwinmall.product.vo.AttrRespVo;
 import com.zhenlong.darwinmall.product.vo.AttrVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.zhenlong.darwinmall.product.entity.AttrEntity;
-import com.zhenlong.darwinmall.product.service.AttrService;
-import com.zhenlong.common.utils.PageUtils;
-import com.zhenlong.common.utils.R;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 
 /**
