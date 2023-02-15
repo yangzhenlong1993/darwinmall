@@ -30,17 +30,23 @@ public class SpuInfoController {
      * Spu上架功能
      */
     @PostMapping("/{spuId}/up")
-    public R SpuPutOnSale(@PathVariable(value = "spuId") Long spuId){
+    public R SpuPutOnSale(@PathVariable(value = "spuId") Long spuId) {
         spuInfoService.putOnSale(spuId);
 
         return R.ok();
+    }
+
+    @GetMapping("/skuId/{id}")
+    public R getSpuInfoBySkuId(@PathVariable("id") Long skuId) {
+        SpuInfoEntity entity = spuInfoService.getSpuInfoBySkuId(skuId);
+        return R.ok().setData(entity);
     }
 
     /**
      * 列表
      */
     @RequestMapping("/list")
-    public R list(@RequestParam Map<String, Object> params){
+    public R list(@RequestParam Map<String, Object> params) {
         PageUtils page = spuInfoService.queryPageByCondition(params);
 
         return R.ok().put("page", page);

@@ -1,25 +1,25 @@
 package com.zhenlong.darwinmall.warehouse.service.impl;
 
-import com.zhenlong.common.utils.R;
-import com.zhenlong.darwinmall.warehouse.feign.ProductFeignService;
-import com.zhenlong.darwinmall.warehouse.vo.SkuHasStockVo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhenlong.common.utils.PageUtils;
 import com.zhenlong.common.utils.Query;
-
+import com.zhenlong.common.utils.R;
 import com.zhenlong.darwinmall.warehouse.dao.WareSkuDao;
 import com.zhenlong.darwinmall.warehouse.entity.WareSkuEntity;
+import com.zhenlong.darwinmall.warehouse.feign.ProductFeignService;
 import com.zhenlong.darwinmall.warehouse.service.WareSkuService;
+import com.zhenlong.darwinmall.warehouse.vo.LockStockResult;
+import com.zhenlong.darwinmall.warehouse.vo.SkuHasStockVo;
+import com.zhenlong.darwinmall.warehouse.vo.WareSkuLockVo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service("wareSkuService")
@@ -89,6 +89,11 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
             return vo;
         }).collect(Collectors.toList());
         return hasStockList;
+    }
+
+    @Override
+    public List<LockStockResult> orderLockStock(WareSkuLockVo vo) {
+        return null;
     }
 
 }

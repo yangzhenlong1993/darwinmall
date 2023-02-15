@@ -19,14 +19,15 @@ public class DarwinMallFeignConfig {
             public void apply(RequestTemplate template) {
                 //使用contextHolder拿到当前调用线程的上下文
                 ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-                HttpServletRequest request = requestAttributes.getRequest();//feign请求丢失请求头的请求
-                if (request != null) {
-                    //同步请求头数据，主要是cookie信息
-                    String cookie = request.getHeader("Cookie");
-                    //给新的feign请求同步了老请求的cookie
-                    template.header("Cookie", cookie);
+                if (requestAttributes != null) {
+                    HttpServletRequest request = requestAttributes.getRequest();//feign请求丢失请求头的请求
+                    if (request != null) {
+                        //同步请求头数据，主要是cookie信息
+                        String cookie = request.getHeader("Cookie");
+                        //给新的feign请求同步了老请求的cookie
+                        template.header("Cookie", cookie);
+                    }
                 }
-
             }
         };
     }

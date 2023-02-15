@@ -1,4 +1,4 @@
-package com.zhenlong.darwinmall.order.vo;
+package com.zhenlong.darwinmall.warehouse.vo;
 
 import lombok.Data;
 

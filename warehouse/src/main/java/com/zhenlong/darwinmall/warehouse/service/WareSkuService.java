@@ -3,7 +3,9 @@ package com.zhenlong.darwinmall.warehouse.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhenlong.common.utils.PageUtils;
 import com.zhenlong.darwinmall.warehouse.entity.WareSkuEntity;
+import com.zhenlong.darwinmall.warehouse.vo.LockStockResult;
 import com.zhenlong.darwinmall.warehouse.vo.SkuHasStockVo;
+import com.zhenlong.darwinmall.warehouse.vo.WareSkuLockVo;
 
 import java.util.List;
 import java.util.Map;
@@ -22,5 +24,7 @@ public interface WareSkuService extends IService<WareSkuEntity> {
     void addStock(Long skuId, Long wareId, Integer skuNum);
 
     List<SkuHasStockVo> getSkusHasStock(List<Long> skuIds);
+
+    List<LockStockResult> orderLockStock(WareSkuLockVo vo);
 }
 

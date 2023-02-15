@@ -56,8 +56,6 @@ public class OAuth2Controller {
                 //以后浏览器访问哪个网站就会带上这个网站的cookie
                 //子域之间，darwinmall.com auth.darwinmall.com......
                 //发卡的时候（指定作用域名为父域名），即使是子域系统发的卡，也能让父域直接使用
-                //TODO 默认发的令牌，作用域为当前域，解决子域session的共享问题
-                //TODO 使用JSON的序列化方式对象放入redis中
                 session.setAttribute("loginUser", data);
                 //2. 登录成功就跳回首页
                 return "redirect:http://darwinmall.com";

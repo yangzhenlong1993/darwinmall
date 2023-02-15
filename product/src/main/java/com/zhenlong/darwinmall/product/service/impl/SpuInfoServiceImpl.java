@@ -1,11 +1,17 @@
 package com.zhenlong.darwinmall.product.service.impl;
 
 import com.alibaba.fastjson.TypeReference;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhenlong.common.constant.ProductConstant;
 import com.zhenlong.common.to.SkuReductionTo;
 import com.zhenlong.common.to.SpuBoundsTo;
 import com.zhenlong.common.to.es.SkuEsModel;
+import com.zhenlong.common.utils.PageUtils;
+import com.zhenlong.common.utils.Query;
 import com.zhenlong.common.utils.R;
+import com.zhenlong.darwinmall.product.dao.SpuInfoDao;
 import com.zhenlong.darwinmall.product.entity.*;
 import com.zhenlong.darwinmall.product.feign.CouponFeignService;
 import com.zhenlong.darwinmall.product.feign.SearchFeignService;
@@ -14,22 +20,13 @@ import com.zhenlong.darwinmall.product.service.*;
 import com.zhenlong.darwinmall.product.vo.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
-
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zhenlong.common.utils.PageUtils;
-import com.zhenlong.common.utils.Query;
-
-import com.zhenlong.darwinmall.product.dao.SpuInfoDao;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 
 @Service("spuInfoService")
@@ -282,6 +279,14 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
              * 3.执行请求会有重试机制
              */
         }
+    }
+
+    @Override
+    public SpuInfoEntity getSpuInfoBySkuId(Long skuId) {
+        SkuInfoEntity byId = skuInfoService.getById(skuId);
+        Long spuId = byId.getSpuId();
+        SpuInfoEntity spuInfoEntity = getById(spuId);
+        return spuInfoEntity;
     }
 
 }

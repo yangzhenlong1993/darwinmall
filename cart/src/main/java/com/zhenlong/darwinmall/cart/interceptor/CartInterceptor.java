@@ -55,6 +55,8 @@ public class CartInterceptor implements HandlerInterceptor {
             userInfoTo.setUserKey(uuid);
         }
         //放行之前，可以将封装好的信息放入线程共享资源ThreadLocal
+        //TODO 尝试检验线程ID
+        System.out.println("CartInterceptor preHandle,当前线程为" + Thread.currentThread());
         threadLocal.set(userInfoTo);
         return true;
     }
@@ -73,6 +75,7 @@ public class CartInterceptor implements HandlerInterceptor {
         UserInfoTo userInfoTo = threadLocal.get();
         //如果没有临时用户，一定要保存一个临时用户
         if (!userInfoTo.isTempUser()) {
+            System.out.println("CartInterceptor postHandle,当前线程为" + Thread.currentThread());
             Cookie cookie = new Cookie(CartConstant.TEMP_USER_COOKIE_NAME, userInfoTo.getUserKey());
             cookie.setDomain("darwinmall.com");
             cookie.setMaxAge(CartConstant.TEMP_USER_COOKIE_TIMEOUT);

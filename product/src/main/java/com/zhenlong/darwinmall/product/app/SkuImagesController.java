@@ -11,7 +11,6 @@ import java.util.Arrays;
 import java.util.Map;
 
 
-
 /**
  * sku图片
  *

@@ -1,17 +1,18 @@
 package com.zhenlong.darwinmall.warehouse.controller;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
+import com.zhenlong.common.utils.PageUtils;
+import com.zhenlong.common.utils.R;
+import com.zhenlong.darwinmall.warehouse.entity.WareSkuEntity;
+import com.zhenlong.darwinmall.warehouse.service.WareSkuService;
+import com.zhenlong.darwinmall.warehouse.vo.LockStockResult;
 import com.zhenlong.darwinmall.warehouse.vo.SkuHasStockVo;
+import com.zhenlong.darwinmall.warehouse.vo.WareSkuLockVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.zhenlong.darwinmall.warehouse.entity.WareSkuEntity;
-import com.zhenlong.darwinmall.warehouse.service.WareSkuService;
-import com.zhenlong.common.utils.PageUtils;
-import com.zhenlong.common.utils.R;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 
 
@@ -27,11 +28,18 @@ import com.zhenlong.common.utils.R;
 public class WareSkuController {
     @Autowired
     private WareSkuService wareSkuService;
+
+    @PostMapping("/lock/order")
+    public R orderLockStock(@RequestBody WareSkuLockVo vo) {
+        List<LockStockResult> stockResult = wareSkuService.orderLockStock(vo);
+        return R.ok().setData(stockResult);
+    }
+
     /**
      * 查询sku是否有库存
      */
     @PostMapping("/hasstock")
-    public R getSkusHasStock(@RequestBody List<Long> skuIds){
+    public R getSkusHasStock(@RequestBody List<Long> skuIds) {
         //返回skuid 和stock
         List<SkuHasStockVo> vos = wareSkuService.getSkusHasStock(skuIds);
         return R.ok().setData(vos);

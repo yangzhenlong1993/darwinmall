@@ -2,7 +2,6 @@ package com.zhenlong.darwinmall.product.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhenlong.common.utils.PageUtils;
-import com.zhenlong.darwinmall.product.entity.SpuInfoDescEntity;
 import com.zhenlong.darwinmall.product.entity.SpuInfoEntity;
 import com.zhenlong.darwinmall.product.vo.SpuSaveVo;
 
@@ -26,5 +25,7 @@ public interface SpuInfoService extends IService<SpuInfoEntity> {
     PageUtils queryPageByCondition(Map<String, Object> params);
 
     void putOnSale(Long spuId);
+
+    SpuInfoEntity getSpuInfoBySkuId(Long skuId);
 }
 
