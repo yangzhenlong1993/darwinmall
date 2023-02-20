@@ -1,10 +1,11 @@
 package com.zhenlong.darwinmall.warehouse.controller;
 
+import com.zhenlong.common.exception.BizCodeEnum;
+import com.zhenlong.common.exception.NoStockException;
 import com.zhenlong.common.utils.PageUtils;
 import com.zhenlong.common.utils.R;
 import com.zhenlong.darwinmall.warehouse.entity.WareSkuEntity;
 import com.zhenlong.darwinmall.warehouse.service.WareSkuService;
-import com.zhenlong.darwinmall.warehouse.vo.LockStockResult;
 import com.zhenlong.darwinmall.warehouse.vo.SkuHasStockVo;
 import com.zhenlong.darwinmall.warehouse.vo.WareSkuLockVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,13 @@ public class WareSkuController {
 
     @PostMapping("/lock/order")
     public R orderLockStock(@RequestBody WareSkuLockVo vo) {
-        List<LockStockResult> stockResult = wareSkuService.orderLockStock(vo);
-        return R.ok().setData(stockResult);
+        try {
+            Boolean lockStockResult = wareSkuService.orderLockStock(vo);
+            return R.ok().setData(lockStockResult);
+        } catch (NoStockException e) {
+            return R.error(BizCodeEnum.NO_STOCK_EXCEPTION.getCode(), BizCodeEnum.NO_STOCK_EXCEPTION.getMsg());
+        }
+
     }
 
     /**

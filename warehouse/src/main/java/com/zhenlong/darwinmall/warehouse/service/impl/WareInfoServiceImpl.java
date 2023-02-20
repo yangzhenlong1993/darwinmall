@@ -51,7 +51,7 @@ public class WareInfoServiceImpl extends ServiceImpl<WareInfoDao, WareInfoEntity
         if (data != null) {
             String phone = data.getPhone();
             BigDecimal bigDecimal = new BigDecimal(phone.substring(phone.length() - 1, phone.length()));
-            fareVo.setAddressVo(data);
+            fareVo.setAddress(data);
             fareVo.setFare(bigDecimal);
             return fareVo;
         }
