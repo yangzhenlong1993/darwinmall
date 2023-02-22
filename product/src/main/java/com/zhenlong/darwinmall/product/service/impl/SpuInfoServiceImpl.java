@@ -67,6 +67,12 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         return new PageUtils(page);
     }
 
+    /**
+     * @param vo
+     * @GlobalTransactional默认是AT模式，不适合超高并发
+     */
+
+    //这里适合Seata AT模式 分布式事务
     @Transactional
     @Override
     public void saveSpuInfo(SpuSaveVo vo) {

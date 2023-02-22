@@ -24,7 +24,6 @@ import com.zhenlong.darwinmall.order.service.OrderService;
 import com.zhenlong.darwinmall.order.service.PaymentInfoService;
 import com.zhenlong.darwinmall.order.to.OrderCreateTo;
 import com.zhenlong.darwinmall.order.vo.*;
-import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -168,6 +167,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 
     /**
      * 提交订单
+     * 此服务为高并发服务，所以不应该采用AT模式
      *
      * @param vo
      * @return
@@ -175,7 +175,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     // @Transactional(isolation = Isolation.READ_COMMITTED) 设置事务的隔离级别
     // @Transactional(propagation = Propagation.REQUIRED)   设置事务的传播级别
     @Transactional(rollbackFor = Exception.class)
-    @GlobalTransactional(rollbackFor = Exception.class)
     @Override
     public SubmitOrderResponseVo submitOrder(OrderSubmitVo vo) {
 
@@ -233,11 +232,12 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
                 //TODO 调用远程锁定库存的方法
                 //出现的问题：扣减库存成功了，但是由于网络原因超时，出现异常，导致订单事务回滚，库存事务不回滚(解决方案：seata)
                 //为了保证高并发，不推荐使用seata，因为是加锁，并行化，提升不了效率,可以发消息给库存服务
+                //库存服务本身也可以使用自动解锁模式。使用消息队列
                 R r = wmsFeignService.orderLockStock(lockVo);
                 if (r.getCode() == 0) {
                     //锁定成功
                     responseVo.setOrder(order.getOrder());
-                    int i = 10 / 0;
+//                    int i = 10 / 0;
 
                     //TODO 订单创建成功，发送消息给MQ
 
@@ -255,6 +255,12 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
                 return responseVo;
             }
         }
+    }
+
+    @Override
+    public OrderEntity getOrderByOrderSn(String orderSn) {
+        OrderEntity orderEntity = this.getOne(new QueryWrapper<OrderEntity>().eq("order_sn", orderSn));
+        return orderEntity;
     }
 
     /**

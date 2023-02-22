@@ -3,6 +3,7 @@ package com.zhenlong.darwinmall.order.interceptor;
 import com.zhenlong.common.constant.AuthServerConstant;
 import com.zhenlong.common.vo.MemberRespVo;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +14,12 @@ public class LoginUserInterceptor implements HandlerInterceptor {
     public static ThreadLocal<MemberRespVo> loginUser = new ThreadLocal<>();
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        System.out.println("LoginUserInterceptor preHandle，当前线程为" + Thread.currentThread());
+        String uri = request.getRequestURI();
+        boolean match = new AntPathMatcher().match("/order/order/status/**", uri);
+
+        if (match) {
+            return true;
+        }
         if (loginUser.get() != null) {
             return true;
         } else {
