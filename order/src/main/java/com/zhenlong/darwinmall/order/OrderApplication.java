@@ -1,6 +1,6 @@
 package com.zhenlong.darwinmall.order;
 
-import com.alibaba.cloud.seata.GlobalTransactionAutoConfiguration;
+
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -39,7 +39,7 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 @EnableRedisHttpSession
 @EnableRabbit
 @EnableDiscoveryClient
-@SpringBootApplication(exclude = GlobalTransactionAutoConfiguration.class)
+@SpringBootApplication
 public class OrderApplication {
 
     public static void main(String[] args) {

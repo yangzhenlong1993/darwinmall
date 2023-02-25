@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhenlong.common.exception.NoStockException;
+import com.zhenlong.common.to.mq.OrderTo;
 import com.zhenlong.common.to.mq.StockDetailTo;
 import com.zhenlong.common.to.mq.StockLockedTo;
 import com.zhenlong.common.utils.PageUtils;
@@ -230,6 +231,22 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
         } else {
             //无需解锁
         }
+    }
+
+    //防止订单服务卡顿，导致订单状态消息一直改不了，库存优先到期，结果查订单状态，肯定是新建的状态，什么都不做就走了，导致卡顿的订单永远无法得到解锁
+    @Override
+    @Transactional
+    public void unlockStock(OrderTo orderTo) {
+        String orderSn = orderTo.getOrderSn();
+        //查一下最新的库存解锁状态，防止重复解锁库存
+        WareOrderTaskEntity task = orderTaskService.getOrderTaskByOrderSn(orderSn);
+        Long id = task.getId();
+        //按照工作单找到所有没有解锁的库存进行解锁
+        List<WareOrderTaskDetailEntity> list = orderTaskDetailService.list(new QueryWrapper<WareOrderTaskDetailEntity>().eq("task_id", id).eq("lock_status", 1));
+        for (WareOrderTaskDetailEntity entity : list) {
+            unlockStock(entity.getSkuId(), entity.getWareId(), entity.getSkuNum(), entity.getId());
+        }
+
     }
 
     @Data

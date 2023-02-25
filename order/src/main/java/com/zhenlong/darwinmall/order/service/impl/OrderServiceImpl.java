@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhenlong.common.exception.NoStockException;
+import com.zhenlong.common.to.mq.OrderTo;
 import com.zhenlong.common.utils.PageUtils;
 import com.zhenlong.common.utils.Query;
 import com.zhenlong.common.utils.R;
@@ -26,6 +27,7 @@ import com.zhenlong.darwinmall.order.to.OrderCreateTo;
 import com.zhenlong.darwinmall.order.vo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
@@ -240,7 +242,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 //                    int i = 10 / 0;
 
                     //TODO 订单创建成功，发送消息给MQ
-
+                    rabbitTemplate.convertAndSend("order-event-exchange", "order.create.order", order.getOrder());
                     return responseVo;
                 } else {
                     //锁定失败
@@ -481,4 +483,25 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     }
 
 
+    @Override
+    public void closeOrder(OrderEntity entity) {
+        //查询当前这个订单的状态
+        OrderEntity orderEntity = this.getById(entity.getId());
+        if (orderEntity.getStatus() == OrderStatusEnum.CREATE_NEW.getCode()) {
+            //关单
+            orderEntity.setStatus(OrderStatusEnum.CANCLED.getCode());
+            this.updateById(orderEntity);
+            OrderTo orderTo = new OrderTo();
+            BeanUtils.copyProperties(orderEntity, orderTo);
+            //发给MQ一个
+            try {
+                //TODO 保证消息一定会发送出去，每一个消息都可以做好日志记录(给数据库保存每一个消息的详细信息)
+                //TODO 定期扫描数据库，将失败的消息再发送一次
+                rabbitTemplate.convertAndSend("order-event-exchange", "order.release.other", orderTo);
+            } catch (Exception e) {
+                //TODO 将没发送成功的消息进行重试发送
+            }
+
+        }
+    }
 }

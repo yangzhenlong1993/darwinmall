@@ -1,6 +1,7 @@
 package com.zhenlong.darwinmall.warehouse.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zhenlong.common.to.mq.OrderTo;
 import com.zhenlong.common.to.mq.StockLockedTo;
 import com.zhenlong.common.utils.PageUtils;
 import com.zhenlong.darwinmall.warehouse.entity.WareSkuEntity;
@@ -28,5 +29,7 @@ public interface WareSkuService extends IService<WareSkuEntity> {
     Boolean orderLockStock(WareSkuLockVo vo);
 
     void unlockStock(StockLockedTo to);
+
+    void unlockStock(OrderTo orderTo);
 }
 

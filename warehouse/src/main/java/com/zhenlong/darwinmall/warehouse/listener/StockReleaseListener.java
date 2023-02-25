@@ -1,6 +1,7 @@
 package com.zhenlong.darwinmall.warehouse.listener;
 
 import com.rabbitmq.client.Channel;
+import com.zhenlong.common.to.mq.OrderTo;
 import com.zhenlong.common.to.mq.StockLockedTo;
 import com.zhenlong.darwinmall.warehouse.service.WareSkuService;
 import org.springframework.amqp.core.Message;
@@ -31,6 +32,17 @@ public class StockReleaseListener {
      */
     @RabbitHandler
     public void handleStockLockedRelease(StockLockedTo to, Message message, Channel channel) throws IOException {
+        try {
+            wareSkuService.unlockStock(to);
+            channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+        } catch (Exception e) {
+            channel.basicReject(message.getMessageProperties().getDeliveryTag(), true);
+        }
+    }
+
+    @RabbitHandler
+    public void handleOrderCloseRelease(OrderTo to, Message message, Channel channel) throws IOException {
+        System.out.println("订单已关闭，准备解锁库存");
         try {
             wareSkuService.unlockStock(to);
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);

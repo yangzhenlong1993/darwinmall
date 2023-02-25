@@ -104,22 +104,22 @@
             <optional>true</optional>
         </dependency>
 
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>io.seata</groupId>
-                    <artifactId>seata-all</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>com.alibaba.cloud</groupId>-->
+        <!--            <artifactId>spring-cloud-starter-alibaba-seata</artifactId>-->
+        <!--            <exclusions>-->
+        <!--                <exclusion>-->
+        <!--                    <groupId>io.seata</groupId>-->
+        <!--                    <artifactId>seata-all</artifactId>-->
+        <!--                </exclusion>-->
+        <!--            </exclusions>-->
+        <!--        </dependency>-->
 
-        <dependency>
-            <groupId>io.seata</groupId>
-            <artifactId>seata-all</artifactId>
-            <version>0.9.0</version>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>io.seata</groupId>-->
+        <!--            <artifactId>seata-all</artifactId>-->
+        <!--            <version>0.9.0</version>-->
+        <!--        </dependency>-->
 
         <!-- 支付宝sdk -->
         <!-- https://mvnrepository.com/artifact/com.alipay.sdk/alipay-sdk-java -->
