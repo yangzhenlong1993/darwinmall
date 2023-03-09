@@ -30,12 +30,26 @@ public class AttrController {
     @Autowired
     private ProductAttrValueService productAttrValueService;
 
+    /**
+     * get base attributes list by spuId
+     *
+     * @param spuId
+     * @return
+     */
     @GetMapping("/base/listforspu/{spuId}")
     public R baseAttrListForSpu(@PathVariable("spuId") Long spuId) {
         List<ProductAttrValueEntity> entities = productAttrValueService.baseAttrListForSpu(spuId);
         return R.ok().put("data", entities);
     }
 
+    /**
+     * get attributes list by catalog Id
+     *
+     * @param params
+     * @param catelogId
+     * @param attrType
+     * @return
+     */
     @GetMapping("/{attrType}/list/{catelogId}")
     public R baseAttrList(@RequestParam Map<String, Object> params, @PathVariable("catelogId") Long catelogId, @PathVariable("attrType") String attrType) {
         PageUtils page = attrService.queryBaseAttrPage(params, catelogId, attrType);

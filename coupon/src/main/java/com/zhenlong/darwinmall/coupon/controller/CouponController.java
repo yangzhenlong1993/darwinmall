@@ -1,21 +1,16 @@
 package com.zhenlong.darwinmall.coupon.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
+import com.zhenlong.common.utils.PageUtils;
+import com.zhenlong.common.utils.R;
+import com.zhenlong.darwinmall.coupon.entity.CouponEntity;
+import com.zhenlong.darwinmall.coupon.service.CouponService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.zhenlong.darwinmall.coupon.entity.CouponEntity;
-import com.zhenlong.darwinmall.coupon.service.CouponService;
-import com.zhenlong.common.utils.PageUtils;
-import com.zhenlong.common.utils.R;
+import java.util.Arrays;
+import java.util.Map;
 
 
 /**
@@ -65,7 +60,7 @@ public class CouponController {
 
 
     /**
-     * 信息
+     * info
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("coupon:coupon:info")

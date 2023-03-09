@@ -29,7 +29,7 @@ public class BrandController {
     private BrandService brandService;
 
     /**
-     * 列表
+     * list
      */
     @RequestMapping("/list")
     //@RequiresPermissions("product:brand:list")

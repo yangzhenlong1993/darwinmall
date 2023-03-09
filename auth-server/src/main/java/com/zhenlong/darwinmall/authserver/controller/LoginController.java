@@ -23,36 +23,30 @@ import java.util.stream.Collectors;
 
 @Controller
 public class LoginController {
-    /**
-     * 发送一个请求直接跳转到一个页面
-     * SpringMVC viewController,将请求和页面映射起来
-     *
-     * @return
-     */
-//    @GetMapping("/login.html")
-//    public String loginPage(){
-//        return "login";
-//    }
-//
-//    @GetMapping("/reg.html")
-//    public String regPage(){
-//        return "reg";
-//
+
     @Autowired
     MemberFeignService memberFeignService;
 
+    /**
+     * register api
+     *
+     * @param vo
+     * @param result
+     * @param redirectAttributes
+     * @return
+     */
     @PostMapping("/register")
     public String register(@Valid UserRegisterVo vo, BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             Map<String, String> errors = result.getFieldErrors().stream().collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
             redirectAttributes.addFlashAttribute("errors", errors);
-            //校验出错，返回注册界面
+            //validation error, return to register page
             return "redirect:http://auth.darwinmall.com/reg.html";
         }
-        //真正的注册
+
         R r = memberFeignService.register(vo);
         if(r.getCode()==0){
-            //注册成功返回登录界面
+            //register success, return to login page
             return "redirect:http://auth.darwinmall.com/login.html";
         } else {
             Map<String, String> errors = new HashMap<>();
@@ -70,7 +64,7 @@ public class LoginController {
         if (r.getCode() == 0) {
             MemberRespVo data = r.getData("data", new TypeReference<MemberRespVo>() {
             });
-            //成功之后放入session
+            //login success and put the info in the redis
             session.setAttribute(AuthServerConstant.LOGIN_USER, data);
             return "redirect:http://darwinmall.com";
         } else {
@@ -83,6 +77,12 @@ public class LoginController {
 
     }
 
+    /**
+     * login api
+     *
+     * @param session
+     * @return
+     */
     @GetMapping("/login.html")
     public String loginPage(HttpSession session) {
         Object attribute = session.getAttribute(AuthServerConstant.LOGIN_USER);

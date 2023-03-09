@@ -36,6 +36,15 @@ public class CartServiceImpl implements CartService {
 
     private final String CART_PREFIX = "darwinmall:cart:";
 
+    /**
+     * add sku to the cart
+     *
+     * @param skuId
+     * @param num
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     @Override
     public CartItem addToCart(Long skuId, Integer num) throws ExecutionException, InterruptedException {
         BoundHashOperations<String, Object, Object> cartOps = getCartOps();
@@ -78,6 +87,12 @@ public class CartServiceImpl implements CartService {
         }
     }
 
+    /**
+     * get items in the cart
+     *
+     * @param skuId
+     * @return
+     */
     @Override
     public CartItem getCartItem(Long skuId) {
         BoundHashOperations<String, Object, Object> cartOps = getCartOps();
@@ -86,6 +101,13 @@ public class CartServiceImpl implements CartService {
         return cartItem;
     }
 
+    /**
+     * get the current cart
+     *
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     @Override
     public Cart getCart() throws ExecutionException, InterruptedException {
         Cart cart = new Cart();
@@ -119,7 +141,7 @@ public class CartServiceImpl implements CartService {
     }
 
     /**
-     * 获取到我们要操作的购物车
+     * obtain the cart which needs to be handled
      *
      * @return
      */
@@ -136,6 +158,12 @@ public class CartServiceImpl implements CartService {
         return operations;
     }
 
+    /**
+     * get items in the cart by cartKey
+     *
+     * @param cartKey
+     * @return
+     */
     private List<CartItem> getCartItems(String cartKey) {
         BoundHashOperations<String, Object, Object> hashOps = redisTemplate.boundHashOps(cartKey);
         List<Object> values = hashOps.values();
@@ -150,6 +178,11 @@ public class CartServiceImpl implements CartService {
         return null;
     }
 
+    /**
+     * remove all the items in the cart
+     *
+     * @param cartKey
+     */
     @Override
     public void clearCart(String cartKey) {
         redisTemplate.delete(cartKey);

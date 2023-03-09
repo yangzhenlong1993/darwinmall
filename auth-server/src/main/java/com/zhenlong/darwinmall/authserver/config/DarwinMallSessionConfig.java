@@ -9,6 +9,12 @@ import org.springframework.session.web.http.DefaultCookieSerializer;
 
 @Configuration
 public class DarwinMallSessionConfig {
+
+    /**
+     * create a bean for serialize the cookie
+     *
+     * @return
+     */
     @Bean
     public CookieSerializer cookieSerializer() {
         DefaultCookieSerializer cookieSerializer = new DefaultCookieSerializer();
@@ -18,6 +24,11 @@ public class DarwinMallSessionConfig {
         return cookieSerializer;
     }
 
+    /**
+     * create a bean for serialize the redis data
+     *
+     * @return
+     */
     @Bean
     public RedisSerializer<Object> springSessionDefaultRedisSerializer() {
         return new GenericJackson2JsonRedisSerializer();

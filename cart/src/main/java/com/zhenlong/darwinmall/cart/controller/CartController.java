@@ -20,24 +20,49 @@ public class CartController {
     @Autowired
     CartService cartService;
 
+    /**
+     * get current user cart items
+     *
+     * @return
+     */
     @GetMapping("/currentUserCartItems")
     @ResponseBody
     public List<CartItem> getCurrentUserCartItems() {
         return cartService.getUserCartItems();
     }
 
+    /**
+     * delete the selected item
+     *
+     * @param skuId
+     * @return
+     */
     @GetMapping("/deleteItem")
     public String deleteItem(@RequestParam("skuId") Long skuId) {
         cartService.deleteItem(skuId);
         return "redirect:http://cart.darwinmall.com/cart.html";
     }
 
+    /**
+     * change the count of the selected item
+     *
+     * @param skuId
+     * @param num
+     * @return
+     */
     @GetMapping("/countItem")
     public String countItem(@RequestParam("skuId") Long skuId, @RequestParam("num") Integer num) {
         cartService.changeItemCount(skuId, num);
         return "redirect:http://cart.darwinmall.com/cart.html";
     }
 
+    /**
+     * check the item
+     *
+     * @param skuId
+     * @param check
+     * @return
+     */
     @GetMapping("/checkItem")
     public String checkItem(@RequestParam("skuId") Long skuId, @RequestParam("checked") Integer check) {
         cartService.checkItem(skuId, check);
@@ -52,9 +77,9 @@ public class CartController {
     }
 
     /**
-     * 添加商品到购物车
-     * ra.addFlashAttribute() 将数据放在session里面可以再页面取出，但是只能取出一次
-     * ra.addAttribute() 将数据URL后面作为路径参数
+     * add item to the cart
+     * ra.addFlashAttribute()  add data into the session, but only for single use
+     * ra.addAttribute()
      *
      * @return
      */

@@ -21,7 +21,7 @@ public class CartInterceptor implements HandlerInterceptor {
     public static ThreadLocal<UserInfoTo> threadLocal = new ThreadLocal<>();
 
     /**
-     * 目标方法执行之前执行
+     * before target API
      *
      * @param request
      * @param response
@@ -62,7 +62,7 @@ public class CartInterceptor implements HandlerInterceptor {
     }
 
     /**
-     * 拦截器执行之后
+     * after the interceptor
      *
      * @param request
      * @param response

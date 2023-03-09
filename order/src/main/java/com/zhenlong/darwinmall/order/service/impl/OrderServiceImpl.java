@@ -93,7 +93,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     }
 
     /**
-     * 订单确认页返回需要用的数据
+     * order confirmation page data
      *
      * @return
      */
@@ -168,8 +168,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     }
 
     /**
-     * 提交订单
-     * 此服务为高并发服务，所以不应该采用AT模式
+     * submit order
+     * because this service require a high concurrency capability, so AT mode should not be used
      *
      * @param vo
      * @return
@@ -266,7 +266,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     }
 
     /**
-     * 保存订单所有数据
+     * save all orders info
      *
      * @param orderCreateTo
      */
@@ -286,6 +286,11 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     }
 
 
+    /**
+     * create an order
+     *
+     * @return
+     */
     private OrderCreateTo createOrder() {
 
         OrderCreateTo createTo = new OrderCreateTo();
@@ -307,7 +312,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     }
 
     /**
-     * 计算价格的方法
+     * calculate the price
      *
      * @param orderEntity
      * @param orderItemEntities
@@ -359,7 +364,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 
 
     /**
-     * 构建订单数据
+     * build order
      *
      * @param orderSn
      * @return
@@ -404,7 +409,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     }
 
     /**
-     * 构建所有订单项数据
+     * build all orders
      *
      * @return
      */
@@ -428,7 +433,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     }
 
     /**
-     * 构建某一个订单项的数据
+     * build one order
      *
      * @param items
      * @return
@@ -437,9 +442,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 
         OrderItemEntity orderItemEntity = new OrderItemEntity();
 
-        //1、商品的spu信息
+        //1、product spu info
         Long skuId = items.getSkuId();
-        //获取spu的信息
+        //obtain spu info
         R spuInfo = productFeignService.getSpuInfoBySkuId(skuId);
         SpuInfoVo spuInfoData = spuInfo.getData("data", new TypeReference<SpuInfoVo>() {
         });
@@ -448,32 +453,29 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         orderItemEntity.setSpuBrand(spuInfoData.getSpuName());
         orderItemEntity.setCategoryId(spuInfoData.getCatalogId());
 
-        //2、商品的sku信息
+        //2、product sku info
         orderItemEntity.setSkuId(skuId);
         orderItemEntity.setSkuName(items.getTitle());
         orderItemEntity.setSkuPic(items.getImage());
         orderItemEntity.setSkuPrice(items.getPrice());
         orderItemEntity.setSkuQuantity(items.getCount());
 
-        //使用StringUtils.collectionToDelimitedString将list集合转换为String
         String skuAttrValues = StringUtils.collectionToDelimitedString(items.getSkuAttr(), ";");
         orderItemEntity.setSkuAttrsVals(skuAttrValues);
 
-        //3、商品的优惠信息
+        //3、product coupon info
 
-        //4、商品的积分信息
+        //4、product credit info
         orderItemEntity.setGiftGrowth(items.getPrice().multiply(new BigDecimal(items.getCount())).intValue());
         orderItemEntity.setGiftIntegration(items.getPrice().multiply(new BigDecimal(items.getCount())).intValue());
 
-        //5、订单项的价格信息
+        //5、order price info
         orderItemEntity.setPromotionAmount(BigDecimal.ZERO);
         orderItemEntity.setCouponAmount(BigDecimal.ZERO);
         orderItemEntity.setIntegrationAmount(BigDecimal.ZERO);
 
-        //当前订单项的实际金额.总额 - 各种优惠价格
-        //原来的价格
         BigDecimal origin = orderItemEntity.getSkuPrice().multiply(new BigDecimal(orderItemEntity.getSkuQuantity().toString()));
-        //原价减去优惠价得到最终的价格
+        //final price =  original price - discount
         BigDecimal subtract = origin.subtract(orderItemEntity.getCouponAmount())
                 .subtract(orderItemEntity.getPromotionAmount())
                 .subtract(orderItemEntity.getIntegrationAmount());
@@ -483,9 +485,14 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     }
 
 
+    /**
+     * close the order
+     *
+     * @param entity
+     */
     @Override
     public void closeOrder(OrderEntity entity) {
-        //查询当前这个订单的状态
+        //check the current status of the order
         OrderEntity orderEntity = this.getById(entity.getId());
         if (orderEntity.getStatus() == OrderStatusEnum.CREATE_NEW.getCode()) {
             //关单

@@ -17,14 +17,13 @@ public class MyMQConfig {
 
     @RabbitListener(queues = "order.release.order.queue")
     public void listener(OrderEntity entity) {
-        System.out.println("收到过期的订单信息，准备关闭订单" + entity.getOrderSn());
+        System.out.println("receive expired order, ready to delete the order" + entity.getOrderSn());
     }
 
     /**
-     * 容器中的组件都会自动创建(RabbitMQ没有这些组件的情况下就会创建)
-     * RabbitMQ只要有，@Bean声明的属性发生变化也不会覆盖，需要去管理界面删除队列重新建立
+     * create a order delay queue
      *
-     * @return
+     * @return Queue object
      */
     @Bean
     public Queue orderDelayQueue() {
@@ -37,6 +36,11 @@ public class MyMQConfig {
         return queue;
     }
 
+    /**
+     * create a order release queue
+     *
+     * @return
+     */
     @Bean
     public Queue orderReleaseQueue() {
         Queue queue = new Queue("order.release.order.queue", true, false, false);

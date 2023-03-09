@@ -27,6 +27,7 @@ public class CategoryController {
 
     /**
      * 查出所有分类以及子分类，以树形列表解构组装起来
+     * get all categories and sub categories, combine them in tree-like structure
      */
     @RequestMapping("/list/tree")
     public R list(){

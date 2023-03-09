@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 处理社交登录请求
+ * handle social platform login request
  */
 @Slf4j
 @Controller

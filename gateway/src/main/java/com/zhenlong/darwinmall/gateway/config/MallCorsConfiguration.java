@@ -8,6 +8,12 @@ import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 @Configuration
 public class MallCorsConfiguration {
+
+    /**
+     * the configuration of Cross-origin resource sharing
+     *
+     * @return
+     */
     @Bean
     public CorsWebFilter corsWebFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

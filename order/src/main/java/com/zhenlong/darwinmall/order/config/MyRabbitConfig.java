@@ -28,43 +28,42 @@ public class MyRabbitConfig {
     }
 
     /**
-     * 定制RabbitTemplate
-     * 1、服务收到消息就会回调
+     * customize RabbitTemplate
+     * 1、 callback when service receive the message
      * 1、spring.rabbitmq.publisher-confirms: true
-     * 2、设置确认回调
-     * 2、消息正确抵达队列就会进行回调
+     * 2. set the confirmation of callback
+     * 2、callback when message arrive the queue correctly
      * 1、spring.rabbitmq.publisher-returns: true
      * spring.rabbitmq.template.mandatory: true
-     * 2、设置确认回调ReturnCallback
-     * <p>
-     * 3、消费端确认(保证每个消息都被正确消费，此时才可以broker删除这个消息)
+     * 2、set ReturnCallback
+     * 3、consuming end confirm (make sure every single message is consumed correctly，and then tell the broker to delete the message in the queue)
      */
-    // @PostConstruct  //MyRabbitConfig对象创建完成以后，执行这个方法
+    // @PostConstruct  //after creating the object of MyRabbitConfig, run this method
     public void initRabbitTemplate() {
 
         /**
-         * 1、只要消息抵达Broker就ack=true
-         * correlationData：当前消息的唯一关联数据(这个是消息的唯一id)
-         * ack：消息是否成功收到
-         * cause：失败的原因
+         * 1、as long as the message is received by the Broker, then ack=true
+         * correlationData: current message unique correlated data (this is the unique id of the message)
+         * ack：receive the message or not?
+         * cause：failure reason
          */
-        //设置确认回调
+        //set confirmation callback
         rabbitTemplate.setConfirmCallback((correlationData, ack, cause) -> {
             /**
-             * 1. 做好消息确认机制（publisher，consumer（手动ack））
-             * 2. 每一个发送的消息都在数据库做好记录，定期将失败的消息再次发送
+             * 1. set up the mechanism of message confirmation（publisher，consumer（manually ack））
+             * 2. create records for each sent message in the database, periodically resend the failed message
              */
             System.out.println("confirm...correlationData[" + correlationData + "]==>ack:[" + ack + "]==>cause:[" + cause + "]");
         });
 
 
         /**
-         * 只要消息没有投递给指定的队列，就触发这个失败回调
-         * message：投递失败的消息详细信息
-         * replyCode：回复的状态码
-         * replyText：回复的文本内容
-         * exchange：当时这个消息发给哪个交换机
-         * routingKey：当时这个消息用哪个路邮键
+         * Once the message cannot arrive the queue, run this callback
+         * message：the info about the failed message
+         * replyCode：reply code
+         * replyText：reply text
+         * exchange：当时这个消息发给哪个交换机 which exchange the message intend to
+         * routingKey：which routing key was using
          */
         rabbitTemplate.setReturnCallback((message, replyCode, replyText, exchange, routingKey) -> {
             System.out.println("Fail Message[" + message + "]==>replyCode[" + replyCode + "]" +
