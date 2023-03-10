@@ -60,13 +60,10 @@ darwinmall
 
 ## architect diagram
 
-### 系统架构图
+### system architect diagram
 
-![](https://i.loli.net/2021/02/18/zMrSWaAfbqYoF4t.png)
+### service architect diagram
 
-### 业务架构图
-
-![](https://i.loli.net/2021/02/18/yBjlqvsCgpVkENc.png)
 
 ## development environment set up
 
