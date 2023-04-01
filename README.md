@@ -61,6 +61,7 @@ darwinmall
 ## architect diagram
 
 ### system architect diagram
+![20201125202655970.png](..%2F..%2FDesktop%2F20201125202655970.png)
 
 ### service architect diagram
 
