@@ -19,7 +19,8 @@ system, user system, and content management.
 ![Screenshot 2023-04-02 161149](https://user-images.githubusercontent.com/54578367/229337831-8ef6c719-bc32-4b89-8f9f-a494b3eddc24.png)
 ### Search Result Page
 ![Screenshot 2023-04-02 163457](https://user-images.githubusercontent.com/54578367/229338715-5f872417-488f-4ead-bfc0-f299309c4cc5.png)
-
+### Main Page of Content Management System
+![Screenshot 2023-04-02 165522](https://user-images.githubusercontent.com/54578367/229340424-09a4d87d-eda8-4257-9950-d8ad931b3143.png)
 
 ## Microservices Structure
 
