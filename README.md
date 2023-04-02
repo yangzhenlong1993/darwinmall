@@ -15,9 +15,10 @@ system, user system, and content management.
 
 ## Project Demonstration (Cause we used the template from a Chinese website, so some parts of page include Chinese characteristics)
 
-### Main page of Client
+### Main Page of Client
 ![Screenshot 2023-04-02 161149](https://user-images.githubusercontent.com/54578367/229337831-8ef6c719-bc32-4b89-8f9f-a494b3eddc24.png)
-
+### Search Result Page
+![Screenshot 2023-04-02 163457](https://user-images.githubusercontent.com/54578367/229338715-5f872417-488f-4ead-bfc0-f299309c4cc5.png)
 
 
 ## Microservices Structure
