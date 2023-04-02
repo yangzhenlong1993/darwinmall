@@ -13,6 +13,12 @@ login, registration, product search, product details, shopping cart, order, and 
 system includes seven modules: system management, commodity system, preferential marketing, inventory system, order
 system, user system, and content management.
 
+## Project Demonstration
+
+### Main page of Client
+![Screenshot 2023-04-02 161149](https://user-images.githubusercontent.com/54578367/229337745-adc7d449-2a6e-46d1-aa91-e2995768d53c.png)
+
+
 ## Microservices Structure
 
 ```
