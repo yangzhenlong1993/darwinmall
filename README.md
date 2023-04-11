@@ -102,3 +102,56 @@ darwinmall
 |    Kibana     |  7.6.2  |                      https://www.elastic.co/cn/kibana                      |
 |   RabbitMQ    |  3.8.5  |                   http://www.rabbitmq.com/download.html                    |
 |     Nginx     |  1.1.6  |                     http://nginx.org/en/download.html                      |
+### deployment
+> Windows
+- edit localhost file，mapping domain name to the nginx address
+
+```
+192.168.56.102	darwinmall.com
+192.168.56.102	search.darwinmall.com
+192.168.56.102  item.darwinmall.com
+192.168.56.102  auth.darwinmall.com
+192.168.56.102  cart.darwinmall.com
+192.168.56.102  order.darwinmall.com
+192.168.56.102  member.darwinmall.com
+the ip above should be replaced with your Nginx ip
+```
+
+- edit the Nginx configuration file in Linux
+
+```shell
+1、In nginx.conf, add the configuration of load balance
+upstream gulimall{
+	# gateway address
+	server 192.168.56.1:88;
+}    
+2、In darwinmall.conf, add the following configuration
+server {
+	# listen to the 80 port of the following domain name
+    listen       80;
+    server_name  darwinmall.com  *.darwinmall.com hjl.mynatapp.cc;
+
+    #charset koi8-r;
+    #access_log  /var/log/nginx/log/host.access.log  main;
+
+    #Configure static resource separation
+    location /static/ {
+        root   /usr/share/nginx/html;
+    }
+
+    location /payed/ {
+        proxy_set_header Host order.darwinmall.com;        
+        proxy_pass http://darwinmall;
+    }
+
+    location / {
+        #root   /usr/share/nginx/html;
+        #index  index.html index.htm;
+        proxy_set_header Host $host;       
+        proxy_pass http://darwinmall;
+    }
+```
+Or you can use the Nginx module to replace the Nginx configuration in your Linux
+
+- clone front end project `darwinmall-content-management-system`, run `npm run dev`
+- clone back end project `darwinmall`, import the project into your IDEA and compile to run
