@@ -8,7 +8,7 @@ which is realized by the current popular technology and written separately from 
 ## Project Description
 
 The Darwin Mall project is a set of e-commerce projects, including the front-end commercial system and the content
-management system, based on SpringCloud, SpringCloud Alibaba, and MyBatis Plus. The front-end comm system includes: user
+management system and the backend system, based on SpringCloud, SpringCloud Alibaba, and MyBatis Plus. The front-end commercial system includes: user
 login, registration, product search, product details, shopping cart, order, and other modules. The background management
 system includes seven modules: system management, commodity system, preferential marketing, inventory system, order
 system, user system, and content management.
